@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      // needed when making post requests in Django
+      // we'll use this for the ajax request in script.js
+      window.CSRF_TOKEN = "{{ csrf_token }}";
+    </script>
+  </head>
+  <body>
+    <h2>My Blog Posts</h2>
+    <div id="posts">
+      {% include 'myapp/posts.html' %}
+    </div>
+
+    <div><a id="lazyLoadLink" href="javascript:void(0);" data-page="2">Load More Posts</a></div>
+  </body>
+</html>

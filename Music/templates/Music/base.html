@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {% block title %}Music{% endblock %}</title>
+{#  {% load staticfiles %}#}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+ <!--<link rel="stylesheet" href="{% static 'bootstrap4/vendor/bootstrap/css/bootstrap.min.css'  %}">--->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-grid.css' %}"/>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+      integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <style type="text/css">
+        body{
+            background-image: url("{% static 'image/guinness1.jpg'%}");
+            background-repeat: no-repeat;
+            width: 100%;
+            background-size: cover;
+            height: 100%;
+
+        }
+        .toochi{
+
+            margin-top: 0.2%;
+        }
+        #nav{
+            background-color:#660066;
+        }
+        #latest{
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container toochi" id="too">
+    <div class="col-lg-12 ">
+  <div class="card">
+      <div class="card-header" style="background-color: white">
+<div class="row" style=" ">
+    <div class="col-lg-3">
+    <img src="{% static  'image/naija1.fw.png'%}"/>
+        <H5 style="margin-top: -1.5%; color:#660066;font-family: 'Bell MT' ">NaijaLatest.com</H5>
+    </div>
+    <div class="col-lg-9 bg-dark">
+      <strong style="font-family: 'Blackadder ITC';font-size:x-small;color: rebeccapurple">{{ day }} ,</strong>
+     <strong style="font-family: 'Blackadder ITC';font-size:x-small;color: rebeccapurple">{{ time }}</strong>
+        <h5 style="font-family: 'Bookman Old Style';font-size:x-small;color: #660066">{{ message }}.....</h5>
+    <!---</div>
+    <div class="col-lg-3">
+      <div class="col-lg-12 ">
+          <div class="row">
+          <div class="col-lg-12 ">
+              <a href="" style="float: right;color: purple;margin-top: 10%">My Profile</a>
+          </div>
+              </div>
+    </div>
+<div class="col-lg-12" style="margin-top:20%">
+    <div class="social" style="float: right">
+    <a href="#" style="color:purple"><i class="fab fa-facebook-f"></i></a>&nbsp;&nbsp;&nbsp;
+     <a href="#" style="color:purple"><i class="fab fa-whatsapp"></i></a>&nbsp;&nbsp;&nbsp;
+     <a href="#" style="color:purple"><i class="fab fa-instagram"></i></a>&nbsp;&nbsp;&nbsp;
+     <a href="#" style="color:purple"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>--->
+    </div>
+
+</div><hr>
+      <div class="row" style="margin-top: -1.5% ">
+
+    <div class="col-lg-8" style="margin-top: 2%;background-color: white">
+        <div class="nav">
+<!-- .navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light " style="margin-top: -3%; height: 100%">
+        <ul class="navbar-nav mr-auto ">
+
+<li class="nav-item active">
+                    <a class="nav-link" href="{% url 'Music:home1' %}" STYLE="color:#660066">Home</a>
+                </li>
+            </ul>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarNavDropdown" class="navbar-collapse collapse">
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Music:songs' %}" style="color:#660066; margin-right: -12px;">Song</a>
+                </li>
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#660066;padding-left:  .0em">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <!--<a class="dropdown-item" href="{% url 'Music:songs' %}" style="color:#660066">All Songs</a>-->
+                        <a class="dropdown-item" href="{% url 'Music:gospel' %}" style="color:#660066">Gosple</a>
+                        <a class="dropdown-item" href="{% url 'Music:hip_hop_rap' %}" style="color:#660066">Hip-Hop/Rap</a>
+                        <a class="dropdown-item" href="{% url 'Music:hiphop_pop' %}" style="color:#660066">Hip-Hop/Pop</a>
+                        <a class="dropdown-item" href="{% url 'Music:others' %}" style="color:#660066">Others</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Music:video' %}" style="color:#660066; margin-right: -12px;">Video</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#660066;padding-left: .0em">
+
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <!--<a class="dropdown-item" href="{% url 'Music:video' %}" style="color:#660066">All Videos</a>-->
+                        <a class="dropdown-item" href="{% url 'Music:video_gospel' %}" style="color:#660066">Gospel</a>
+                        <a class="dropdown-item" href="{% url 'Music:video_hiphop_pop' %}" style="color:#660066">Hip-Hop/Pop</a>
+                        <a class="dropdown-item" href="{% url 'Music:hip_hop_rap' %}" style="color:#660066">Hip-Hop/Rap</a>
+                        <a class="dropdown-item" href="{% url 'Music:video_others' %}" style="color:#660066">Others</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'News:all_news' %}" style="color:#660066;margin-right: -12px">News</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#660066; padding-left: .0em">
+
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'News:politics' %}" style="color:#660066">Politics</a>
+                        <a class="dropdown-item" href="{% url 'News:sport' %}" style="color:#660066">Sport</a>
+                        <a class="dropdown-item" href="{% url 'News:entertainment' %}" style="color:#660066">Entertainment</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Gist:all_gist' %}" style="color:#660066;margin-right: -12px">Gist</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#660066;padding-left:  .0em">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'Gist:gossip' %}" style="color:#660066">Gossip</a>
+                        <a class="dropdown-item" href="{% url 'Gist:relationship' %}" style="color:#660066">Relationship</a>
+                        <a class="dropdown-item" href="{% url 'Gist:celeb' %}" style="color:#660066">Celebrity</a>
+                        <a class="dropdown-item" href="{% url 'Gist:wedding' %}" style="color:#660066">Wedding</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#660066">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:#660066">Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+<!-- /.navbar -->
+
+    </div>
+
+
+        {% block body %}
+        {% endblock %}
+
+
+    </div>
+
+<div class="col-lg-4 bg-info">
+    <div class="card">
+<div class="card-body">
+    <h4>Top 10 Songs </h4>
+    <img src="{% static  'image/battle4.fw.png'%}"/>
+</div>
+<div class="card-body">
+    <h4>Top 10 Video </h4>
+    <img src="{% static 'image/battle4.fw.png' %}" class="img-fluid"/>
+</div>
+<div class="card-body">
+     <h4>Top 10 comedy </h4>
+    <img src="{% static 'image/battle4.fw.png' %}" class="img-fluid"/>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<!---<script src="{% static 'bootstrap4/vendor/bootstrap/js/bootstrap.min.js' %}"></script>--->
+
+</html>

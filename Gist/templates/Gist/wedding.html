@@ -1,0 +1,71 @@
+
+{% extends 'Music/base.html'%}
+<title> {% block title %}Gossip{% endblock %}</title>
+
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+          integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+
+{% block body %}
+
+    {% load static %}
+    <div class="container" style="background-color: white;margin-top: 0.5% ">
+    <div class="row" style="margin-top: 2px">
+    {% for gists in   first_twelve_wedding %}
+                <div class="col-md-4 " style="padding-left: 1px;padding-right: 1px">
+                    <div class="card card-img-top ">
+                        <a href="{% url 'Gist:display_gist' gists.id %}">
+                            <img src="{{ gists.cover_image.url }}" class="img-fluid" style="height: 160px; width: 1000px;">
+                        </a>
+                        <a href="{% url 'Gist:display_gist' gists.id %}" style="color: darkgray;">
+                            <h6 style="font-family:'Times New Roman'; ">{{ gists.title }}</h6>
+                        </a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="#" style="margin-left: 5px;color: darkgray"> <i class="fas fa-share-alt" style="color: black"></i>&nbsp;7</a>
+                            </div>
+                             <div class="col-md-6">
+                                <a href="#" style="color: darkgray"> <i class="fas fa-eye" style="color: black"></i>7</a>
+                             </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+
+    </div>
+    <div class="row" style="margin-top: 2%">
+        <img src="{% static 'image/adon2.fw.png' %}" alt="Third Slide" class="img-fluid"/>
+    </div>
+    <div class="row" style="margin-top: 2px">
+    {% for gists in   last_wedding %}
+                <div class="col-md-4 " style="padding-left: 1px;padding-right: 1px">
+                    <div class="card card-img-top ">
+                        <a href="{% url 'Gist:display_gist' gists.id %}">
+                            <img src="{{ gists.cover_image.url }}" class="img-fluid" style="height: 160px; width: 1000px;">
+                        </a>
+                        <a href="{% url 'Gist:display_gist' gists.id %}" style="color: darkgray;">
+                            <h6 style="font-family:'Times New Roman'; ">{{ gists.title }}</h6>
+                        </a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="#" style="margin-left: 5px;color: darkgray"> <i class="fas fa-share-alt" style="color: black"></i>&nbsp;7</a>
+                            </div>
+                             <div class="col-md-6">
+                                <a href="#" style="color: darkgray"> <i class="fas fa-eye" style="color: black"></i>7</a>
+                             </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+
+    </div>
+    </div>
+{% endblock %}
