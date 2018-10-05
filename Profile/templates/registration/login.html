@@ -1,0 +1,35 @@
+{% extends 'Music/base.html' %}
+
+{% block title %}Songs{% endblock %}
+{% block body %}
+    {% load static %}
+    <div class="container" style="margin-top: 2%">
+        <div class="row">
+            <div class="col-lg-6 offset-1">
+                <div class="card">
+                    <div class="card-img-top" style="margin-top: 2%">
+                        <img src="{% static "image/user.fw.png" %}" class="mx-auto d-block img-fluid" alt="My image"/>
+                    </div>
+                    <div class="card-body align-items-lg-center" style="margin-top: -2%;">
+                        <div class="form-group">
+
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <p><strong>-- OR --</strong></p>
+                        <a href="{% url 'Profile:social:begin' 'facebook' %}">Login with Facebook</a><br>
+                        <a href="{% url 'Profile:social:begin' 'github' %}">Login with GitHub</a><br>
+                        <a href="{% url 'Profile:social:begin' 'google-oauth2' %}">Login with Google</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends 'Music/base.html' %}
+<title> {% block title %}News View{% endblock %}</title>
+{% block extra_head_tags %}
+{% for gist in gist %}
+<meta property="og:url"           content="{{ ref_url }}/{{gist.title  }}" /><meta property="og:type"          content="website" />
+
+  <meta property="og:title"         content="{{ gist.title }}" />
+  <meta property="og:description"   content="{{ gist.description }}" />
+  <meta property="og:image"         content="{{ ref_url }}{{ gist.cover_image.url }}" />
+    {% endfor %}
+{% endblock %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+          integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+{% block body %}
+  {% load static %}
+
+  <div class="container" style="background-color:white; margin-top: 0.5%">
+
+
+       <div class="row">
+            <div class="col-sm-12" >
+                <a href="#" class="col-sm-12 btn btn-dark"><strong>[MIXTAPE]: </strong>{{mixtape.tape_name |safe}}</a>
+                <h6 style="color:#535362;margin-top: 5%"><strong>Posted on: </strong>{{mixtape.uploaded_at.date }}</h6>
+                <h6 style="color: #535362; margin-top: 5%">By <strong>{{ mixtape.user.username }}</strong></h6>
+            </div>
+        </div><br>
+
+
+  <div class="row">
+        <div class="col-lg-12">
+            <div class="too" style="float: right">
+                {% for gist in gist %}
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ ref_url }}" target="_blank">
+                    <i class="fab fa-facebook-square fa-2x" style="color: #3B5998"></i>
+                </a>
+                {% endfor %}
+                <a href="" ><i class="fab fa-google-plus-square fa-2x" style="color: #dc4e41"></i></a>
+                <a href=""  ><i class="fab fa-twitter-square fa-2x" style="color: #55acee"></i></a>
+                <a href="" ><i class="fab fa-linkedin fa-2x" style="color:  #0077B5"></i></a>
+                <a href=""><i class="fab fa-whatsapp-square fa-2x" style="color: #25d366"></i></a>
+            </div>
+        </div>
+    </div>
+  <hr>
+
+
+  <div class="row">
+      <div class="col-lg-12">
+          <h6 style="color: #535362">{{mixtape.dj_description |safe}}</h6>
+      </div>
+  </div>
+
+  <hr>
+
+  <div class="row" style="margin-top: 8%">
+      <div class="col-lg-12 col-sm-12">
+          <img src="{{ mixtape.tape_image.url }}" class="img-fluid center-block" style="height: 210px;width: 1000px">
+          <audio id="myAudio">
+              <source src="{{mixtape.tape.url }}" type="audio/mpeg">
+              Your browser does not support the audio element.
+          </audio>
+         <button onclick="playAudio()" type="button" style="margin-top: 5%">Play Audio</button>
+          <button onclick="pauseAudio()" type="button" style="margin-top: 5%">Pause Audio</button>
+          <button  type="button" style="margin-top: 1%"><a href="{{mixtape.tape.url }}" style="text-decoration: none;color: black"
+                                                           download="{{ mixtape.tape.url }}"> Download Audio</a>
+          </button>
+      </div>
+  </div>
+    <div class="row" style="margin-top: 5%">
+    <div class="col-lg-6">
+        <h6>{{ mixtape.tracks |safe}}</h6>
+    </div>
+    </div>
+
+<div class="row" style="margin-top: 10%">
+    <div class="col-12 bg-dark">
+        <h6 style="text-align: center; color:white "><strong>RELATED MIXTAPES</strong></h6>
+    </div>
+</div>
+  <div class="row" style="margin-top: 10%">
+    {% for tapes in  related_mixtape %}
+                <div class="col-md-6 " style="padding-left: 10px;padding-right: 10px">
+                        <a href="{% url 'Music:music_mixtape' tapes.slug %}" style="text-decoration: none">
+                            <img src="{{ tapes.tape_image.url }}" class="img-fluid" style="height: 160px; width: 1000px;">
+                        </a>
+                    <h2></h2>
+                    <h2></h2>
+                         <a href="{% url 'Music:music_mixtape' tapes.slug %}" style="text-decoration: none">
+                            <h6 style="font-family:'Times New Roman'; color:#535362 "><strong>{{ tapes.tape_name|safe }}</strong></h6>
+                        </a>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+    {% endfor %}
+  </div>
+
+      <div class="row">
+       <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your share button code -->
+  <div class="fb-share-button"
+       data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="small"
+       data-mobile-iframe="true">
+      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+
+         class="fb-xfbml-parse-ignore"> <i class="fab fa-facebook-square fa-2x" style="color: #3B5998"></i>
+      </a>
+  </div>
+      </div>
+  <div class="col-lg-12" style="margin-top: 4%">
+
+          <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            COMMENT HERE
+          </a>
+            <div class="collapse" id="collapseExample" style="margin-top: 2%">
+              <div class="card card-body">
+                <form class="form-horizontal" method="post" action="{% url 'Music:save_comment' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="mixtape" value="{{mixtape.id }}">
+                             <input type="hidden" name="mixtape_slug" value="{{mixtape.slug }}">
+                            <div class="row">
+                              <label class="col-lg-3 control-label" for="comment" style="color: black">Comment</label>
+                              <div class="col-lg-6">
+                                  <textarea type="text"  cols="45" rows="8" class="form-control" id="comment" value="{{ comment}}" name="comment" required></textarea>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                              <label class="col-lg-3 control-label" for="name" style="color: black">Name</label>
+                              <div class="col-lg-6">
+                                  <input type="text"  class="form-control" id="name" value="{{name }}" name="name" required  >
+                              </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                  <button type="submit" class="btn btn-dark" style="color:white;">Post Comment</button>
+                              </div>
+                            </div>
+                        </div>
+                    </form>
+              </div>
+            </div>
+        </div>
+    {% if comments %}
+    <div class="row" style="margin-top: 5%">
+    <div class="col-lg-12">
+        <div class="col-lg-3 bg-dark" style="height: 30px; border-radius: 3px">
+           <strong style="color: white">COMMENTS {{ total }}</strong>
+        </div>
+    </div>
+    <div class="col-sm-12" style="margin-top: 2%">
+    <div class="row">
+        {% for comment in  comments %}
+                <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                    <div class="col-lg-2" style="margin-top: 2%">
+                        <i class="fas fa-user fa-3x float-right"></i>
+                    </div>
+                    <div class="col-lg-7" style="margin-top: 1%">
+                        <h2>{{ comment.name }}</h2>
+                        <h6>{{ comment.date }}</h6>
+                        <h6>{{ comment.comment }}</h6>
+                        <div class="col-lg-12" style="margin-top: 0.5%">
+                         <a class="btn btn-dark" data-toggle="collapse" href="" role="button">Reply</a>
+                    </div><br>
+                    </div>
+                   </div>
+            </div>
+                </div>
+        {% endfor %}
+            </div>
+    </div>
+
+    </div>
+    {% endif %}
+
+  </div>
+
+   <script>
+var x = document.getElementById("myAudio");
+
+function playAudio() {
+    x.play();
+}
+
+function pauseAudio() {
+    x.pause();
+}
+</script>
+
+<script type="text/javascript">
+function goFullscreen(id) {
+  var element = document.getElementById(id);
+  if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+</script>
+
+{% endblock %}

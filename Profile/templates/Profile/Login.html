@@ -1,0 +1,49 @@
+{% extends 'Music/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color: whitesmoke; box-shadow: 10px 10px 10px;color:darkgray">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p style="color:red">{{ message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 offset-3">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Login Here</h2>
+                </div>
+                <div class="card-body">
+                    <form class="form-group" method="post" action="{% url 'Profile:signin' %}">
+                      {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label><i class="far fa-envelope"></i><strong>  Email</strong></label>
+                            <input type="text" class="form-control" placeholder="Email" name="email" value="{{ email }}"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="fas fa-unlock-alt" ><strong>  Password</strong></label>
+                            <input type="password" class="form-control" placeholder="Password" name="password" value="{{ password }}"/>
+                        </div>
+                    </div>
+                      <button class="btn btn-primary btn-block">Log In</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

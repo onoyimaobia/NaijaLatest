@@ -1,0 +1,160 @@
+{% extends 'Music/base.html' %}
+{% load static %}
+
+<!----<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+ <!--<link rel="stylesheet" href="{% static 'bootstrap4/vendor/bootstrap/css/bootstrap.min.css'  %}">--->
+    <!---<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-grid.css' %}"/>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+      integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">---->
+      <!--<style type="text/css">-->
+ /*body {
+    background-color: red;
+    width: 400px;
+    margin: 20px auto;
+    font: normal 13px/100% sans-serif;
+    color: #444;
+}
+div {
+    display:none;
+
+}
+.totop {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+}*/
+/*.totop a {
+    display: none;
+}
+a, a:visited {
+    color: #33739E;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+}
+a:hover {
+    text-decoration: none;
+}*/
+/*#loadMore {
+    padding: 10px;
+    text-align: center;
+    background-color: red;
+    color: #fff;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #fff;
+    box-shadow: 0 1px 1px #ccc;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+#loadMore:hover {
+    background-color: #fff;
+    color: #33739E;
+}
+      <!--</style>--->
+{% block body %}
+
+  <div class="container">
+  <div class="col-lg-12">
+  {% for post in posts %}
+  <div class="row" style="background-color: black">
+      <div id="rose" class="col-lg-4" style="background-color: black">
+          <a href="" style="background-color: gray">
+              <img src="{{post.cover_image.url }}" class="img-fluid" style="height: 120px; width: 100%;">
+          </a>
+      </div>
+      <div class="col-lg-8" style="background-color: #1c7430">
+          <a href="" style="color: #535362"><strong>{{ post.subtitle }}</strong></a>
+          <h6 style="font-family: 'Times New Roman'; color: lightgray">{{ post.subbody }}
+              <strong style="font-family: 'Times New Roman'; font-size: medium">.....</strong></h6>
+      </div>
+      <div class="col-lg-12" style="background-color: #0c5460">
+          <hr style="color: black; height: 5px;">
+      </div>
+  </div>
+      {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+
+
+
+  {% endfor %}
+  </div>
+
+
+<a href="#" id="loadMore">Load More</a>
+
+<p class="totop">
+    <a href="#top">Back to top</a>
+</p>
+  </div>
+{% endblock %}
+<!---<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>--->
+<!---<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script aria-describedby="{% static 'lazyload/js.js' %}"></script>--->
+{% block js %}
+<script>
+    $(function () {
+    $("div.col-lg-4").slice(0, 2).show();
+    $("#loadMore").on('click', function (e) {
+        e.preventDefault();
+        $("div:hidden").slice(0, 2).slideDown();
+        if ($("div:hidden").length == 0) {
+            $("#load").fadeOut('slow');
+        }
+        $('html,body').animate({
+            scrollTop: $(this).offset().top
+        }, 1500);
+    });
+});
+
+$('a[href=#top]').click(function () {
+    $('body,html').animate({
+        scrollTop: 0
+    }, 600);
+    return false;
+});
+
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 50) {
+        $('.totop a').fadeIn();
+    } else {
+        $('.totop a').fadeOut();
+    }
+});
+    /*(function($) {
+  $('#lazyLoadLink').on('click', function() {
+    var link = $(this);
+    var page = link.data('page');
+
+    $.ajax({
+      type: 'post',
+      url: '/lazy_load_posts/',
+      data: {
+        'page': page,
+        'csrfmiddlewaretoken': window.CSRF_TOKEN // from index.html
+      },
+      success: function(data) {
+        // if there are still more pages to load,
+        // add 1 to the "Load More Posts" link's page data attribute
+        // else hide the link
+        if (data.has_next) {
+            link.data('page', page+1);
+        } else {
+          link.hide();
+        }
+        // append html to the posts div
+        $('#div').append(data.posts_html);
+      },
+      error: function(xhr, status, error) {
+        // shit happens friends!
+      }
+    });
+  });
+}(jQuery));*/
+</script>
+{% endblock %}

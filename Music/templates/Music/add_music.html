@@ -1,0 +1,102 @@
+{% extends 'Profile/dash-board.html' %}
+{% block title %}ADD MUSIC {% endblock %}
+{% block body %}
+
+    {% load static %}
+
+    <div class="container">
+    <div class="row">
+            <div class="col-md-8 offset-2">
+                {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color: whitesmoke; box-shadow: 10px 10px 10px;color:darkgray">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    <p style="color:red">{{ message }}</p>
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-md-3 offset-4 bg-dark" style="border-radius: 6px">
+                   <h3 style="color: white; text-align: center">ADD MUSIC</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                 <form method="POST" class="form-horizontal" enctype="multipart/form-data">
+                                {% csrf_token %}
+                     <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.song_title.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.song_title}}
+                            </div>
+                            {{form.song_title.errors }}
+                     </div>
+                     <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.album.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.album}}
+                            </div>
+                            {{form.album.errors }}
+                     </div>
+                     <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.genre.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.genre}}
+                            </div>
+                            {{form.genre.errors }}
+                     </div>
+                      <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.released_Year.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.released_Year}}
+                            </div>
+                            {{form.released_Year.errors }}
+                     </div>
+                     <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.cover_image.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.cover_image}}
+                            </div>
+                            {{form.cover_image.errors }}
+                     </div>
+                     <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.uploader.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.uploader}}
+                            </div>
+                            {{form.uploader.errors }}
+                     </div>
+                     <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.artist.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.artist}}
+                            </div>
+                            {{form.artist.errors }}
+                     </div>
+                     <div class="form-group">
+                            <label for="{{ form.id }}"
+                                   class="control-label col-sm-2">{{form.featured_artist.label }}: </label>
+                            <div class="col-sm-9">
+                                {{form.featured_artist}}
+                            </div>
+                            {{form.featured_artist.errors }}
+                     </div>
+                     <div class="form-group col-sm-12">
+                         <button class="btn btn-success pull-right">Submit</button>
+                     </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

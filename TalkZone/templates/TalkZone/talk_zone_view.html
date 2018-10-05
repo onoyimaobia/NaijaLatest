@@ -1,0 +1,155 @@
+{% extends 'Music/base.html' %}
+{% block title %}View Talk Zone{% endblock %}
+
+{% block extra_head_tags %}
+
+    <meta property="og:url"           content="{{ ref_url }}/{{talk_zone.title  }}" /><meta property="og:type" content="website" />
+
+  <meta property="og:title"         content="{{ talk_zone.title }}" />
+  <meta property="og:description"   content="{{talk_zone.description }}" />
+  <meta property="og:image"         content="{{ ref_url }}{{ talk_zone.cover_image.url }}" />
+
+{% endblock %}
+
+{% block body %}
+  {% load static %}
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-4" >
+                <a href="#" class="btn btn-dark" role="button">Talk Zone</a>
+            </div>
+            <div class="col-lg-12">
+                <strong style="font-family: 'Times New Roman'; font-size:x-large;color: #535362">{{ talk_zone.title }}</strong>
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12">
+                <h6>Posted by <strong>{{ talk_zone.poster }}</strong> on {{ talk_zone.created_on | date }}</h6>
+            </div>
+        </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="too" style="float: right">
+                <a href=""><i class="fab fa-facebook-square fa-2x" style="color: #3B5998"></i></a>
+                <a href="" ><i class="fab fa-google-plus-square fa-2x" style="color: #dc4e41"></i></a>
+                <a href=""  ><i class="fab fa-twitter-square fa-2x" style="color: #55acee"></i></a>
+                <a href="" ><i class="fab fa-linkedin fa-2x" style="color:  #0077B5"></i></a>
+                <a href=""><i class="fab fa-whatsapp-square fa-2x" style="color: #25d366"></i></a>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+        <div class="row">
+            <div class="col-lg-12">
+               <img src="{{talk_zone.cover_image.url }}" class="img-fluid" style="height: 280px; width: 1000px;">
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12">
+                <strong style="font-family: 'Times New Roman';font-size: large">{{ talk_zone.description }}</strong>
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12">
+               <h5 style="font-family: 'Times New Roman';font-size: large">{{ talk_zone.body1 | safe |linebreaks  }}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <img src="{{talk_zone.middle_image.url }}" class="img-fluid" style="height: 280px; width: 1000px;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+               <h5 style="font-family: 'Times New Roman';font-size: large">{{ talk_zone.body2 | safe |linebreaks  }}</h5>
+            </div>
+        </div>
+
+    <hr>
+    {% for talk in one_talk_zone %}
+        <div class="row">
+        <div class="col-lg-12">
+        <a href="" style="font-family: 'Times New Roman';font-size: large;color:darkgray;"><strong style="color: black">SEA ALSO:- </strong>{{ talk.subtitle }}</a>
+        </div>
+        </div>
+    {% endfor %}
+    <br><div class="row">
+        <div class="col-lg-12">
+
+          <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            COMMENT HERE
+          </a>
+            <div class="collapse" id="collapseExample" style="margin-top: 2%">
+              <div class="card card-body">
+                <form class="form-horizontal" method="post" action="{% url 'TalkZone:save_comment' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="talk_zone" value="{{ talk_zone.id }}">
+                            <div class="row">
+                              <label class="col-lg-3 control-label" for="comment" style="color: black">Comment</label>
+                              <div class="col-lg-6">
+                                  <textarea type="text"  cols="45" rows="8" class="form-control" id="comment" value="{{ comment}}" name="comment" required></textarea>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                              <label class="col-lg-3 control-label" for="name" style="color: black">Name</label>
+                              <div class="col-lg-6">
+                                  <input type="text"  class="form-control" id="name" value="{{name }}" name="name" required  >
+                              </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                  <button type="submit" class="btn btn-dark" style="color:white;">Post Comment</button>
+                              </div>
+                            </div>
+                        </div>
+                    </form>
+              </div>
+            </div>
+        </div>
+    </div><br>
+    {% if comments %}
+    <div class="row" style="margin-top: 5%">
+    <div class="col-lg-12">
+        <div class="col-lg-3 bg-dark" style="height: 30px; border-radius: 3px">
+           <strong style="color: white">COMMENTS {{ total }}</strong>
+        </div>
+    </div>
+    <div class="col-sm-12" style="margin-top: 2%">
+    <div class="row">
+        {% for comment in  comments %}
+                <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                    <div class="col-lg-2" style="margin-top: 2%">
+                        <i class="fas fa-user fa-3x float-right"></i>
+                    </div>
+                    <div class="col-lg-7" style="margin-top: 1%">
+                        <h2>{{ comment.name }}</h2>
+                        <h6>{{ comment.date }}</h6>
+                        <h6>{{ comment.comment }}</h6>
+                        <div class="col-lg-12" style="margin-top: 0.5%">
+                         <a class="btn btn-dark" data-toggle="collapse" href="" role="button">Reply</a>
+                    </div><br>
+                    </div>
+                   </div>
+            </div>
+                </div>
+        {% endfor %}
+            </div>
+    </div>
+
+    </div>
+    {% endif %}
+
+    </div>
+{% endblock %}

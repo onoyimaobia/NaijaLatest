@@ -1,0 +1,28 @@
+{% extends 'Music/base.html' %}
+{% block title %}Love Quotes{% endblock %}
+
+
+{% block body %}
+{% load static %}
+   <div class="container">
+    <div class="row">
+        {% for quotes in  first_ten_lovequotes %}
+                <div class="col-md-10 offset-1 " style="padding-left: 5px;padding-right: 5px;">
+
+                            <a href="">
+                                <img src="{{ quotes.quote_picture.url }}" class="img-fluid" style="height: 320px; width: 800px;">
+                            </a>
+                                <a href="{{ quotes.quote_picture.url }}" download="{{ quotes.quote_picture.url }}">Download Picture</a>
+                                <a href="" style="float: right">share picture</a>
+
+                                <h6>{{ quotes.message|safe|linebreaks }}</h6>
+
+
+
+
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+    </div>
+   </div>
+{% endblock %}

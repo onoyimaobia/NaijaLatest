@@ -1,0 +1,44 @@
+{% extends 'Profile/dash-board.html' %}
+{% block title %}ADD MUSIC {% endblock %}
+{% block body %}
+
+    {% load static %}
+
+    <div class="container">
+    <div class="row">
+            <div class="col-md-8 offset-2">
+                {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color: whitesmoke; box-shadow: 10px 10px 10px;color:darkgray">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    <p style="color:black">{{ message }}</p>
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+    <div class="col-lg-10 offset-1">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-md-3 offset-4 bg-dark" style="border-radius: 6px">
+                   <h3 style="color: white; text-align: center">ADD MIXTAPE</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                 <form class="form-group" method="post"  enctype="multipart/form-data">
+                     {% csrf_token %}
+                     <div class="col-md-6">
+                         <label><strong>check to add more mixtape:</strong></label>
+                        <input type="checkbox" name="checks" value="1" />
+                    </div>
+                     {{ form.media }}
+                     {{ form }}
+                     <div class="form-group col-sm-12" style="margin-top: 2%">
+                         <button class="btn btn-success pull-right">Submit</button>
+                     </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

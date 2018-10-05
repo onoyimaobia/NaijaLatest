@@ -1,0 +1,119 @@
+{% extends 'Profile/dash-board.html' %}
+ {% block title %}User Dashboard{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container">
+    <div class="col-sm-10 offset-1">
+    <div class="row">
+            <div class="col-md-8 offset-2">
+                {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color: black; box-shadow: 10px 10px 10px;color:darkgray">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <p style="color:white">{{ message }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                      <h3 style="text-align: center">
+                          User Priority
+                      </h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                   <div class="row">
+                   <!----- View user---->
+                    <div class="col-sm-6">
+                        <h4 style="text-align: center">User's in Viewer</h4>
+                       {% if viewer %}
+                        <table class="table table-striped table-hover" id="group-table" style="margin-top: 2%">
+                             <tbody id="thead">
+                             {% for users in viewer %}
+                             <tr>
+                                 <td>{{ users.username }}</td>
+                             </tr>
+                             {% endfor %}
+                             </tbody>
+                         </table>
+                       {% endif %}
+                    </div>
+                       <div class="col-sm-6">
+                        <h4>User's in Special User</h4>
+                        {% if staff %}
+                            <table class="table table-striped table-hover" id="group-table" style="margin-top: 2%">
+                                 <tbody id="thead">
+                                 {% for users in staff %}
+                                 <tr>
+                                     <td>{{ users.username }}</td>
+                                 </tr>
+                                 {% endfor %}
+                                 </tbody>
+                             </table>
+                          {% endif %}
+                    </div>
+                   </div>
+                <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                          <h4 style="text-align: center">Add User to Special User</h4>
+                            <form class="form-group" method="post" action="{% url 'Profile:add_user' %}">
+                            {% csrf_token %}
+                                <div class="col-sm-6">
+                                <label>Select User </label><br>
+
+                                <select name="users" id="id_songs" class="form-control">
+                                    {% for es in user %}
+                                        <option value="{{ es.id }}">{{ es.username }}</option>
+                                    {% endfor %}
+                                </select><br>
+                                </div>
+                                 <div class="col-sm-10">
+                                          {% for groups in group %}
+                                          <input type="radio" name="Special_Users" value="{{ groups.name }}" style="margin-left: 10%">{{ groups.name }}
+
+                                        {% endfor %}
+                                 </div>
+                                      <div class="col-lg-6">
+                                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" style="background-color: white">Create</button>
+                                          </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4 style="text-align: center">Delete User fro Group</h4>
+                            <form class="form-group" method="post" action="{% url 'Profile:delete_user' %}">
+                            {% csrf_token %}
+                                      <div class="col-sm-6">
+                                <label>Delete User </label><br>
+
+                                <select name="deleteuser" id="id_deleteuser" class="form-control">
+                                    {% for es in user %}
+                                        <option value="{{ es.id }}">{{ es.username }}</option>
+                                    {% endfor %}
+                                </select><br>
+                                      </div>
+                                      <div class="col-sm-10">
+                                          {% for groups in group %}
+                                          <input type="radio" name="Special_Users" value="{{ groups.name }}" style="margin-left: 10%">{{ groups.name }}
+
+                                        {% endfor %}
+                                      </div>
+                                      <div class="col-lg-6">
+                                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" style="background-color: white">Delete</button>
+                                          </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+             </div>
+         </div>
+    </div>
+</div>
+
+{% endblock %}

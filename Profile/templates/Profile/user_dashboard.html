@@ -1,0 +1,290 @@
+{% extends 'Profile/dash-board.html' %}
+ {% block title %}User Dashboard{% endblock %}
+
+{% block body %}
+{% load static %}
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <!---<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" >--->
+<link rel="stylesheet" href="{% static 'datatable/Buttons-1.5.2/css/buttons.dataTables.min.css' %}" >
+ <div class="row">
+            <div class="col-md-8 offset-2">
+                {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" style="background-color: whitesmoke; box-shadow: 10px 10px 10px;color:darkgray">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    <p style="color:red">{{ message }}</p>
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+<div class="col-lg-12">
+<div class="row" style="margin-top: 2%">
+    <div class="col-md-3 offset-md-4" style="background-color: black; border-radius: 5px">
+        <h3 style="color: white; text-align: center">UPLOADED AUDIO</h3>
+    </div>
+</div>
+<div class="row" style="margin-top: 1%;box-shadow: 10px 10px 10px">
+
+            {% if user_uploaded_song%}
+                <table  id="example" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Song Title</th>
+                    <th>Album</th>
+                    <th>Featured Artist</th>
+                    <th>Released Year</th>
+                    <th>Detail</th>
+                    <th>Edit</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for audio in user_uploaded_song  %}
+                    <tr>
+                    <td>{{ audio.music.artist }}</td>
+                    <td>{{ audio.music.song_title }}</td>
+                    <td>{{ audio.music.album }}</td>
+                    <td>{{ audio.music.featured_artist}}</td>
+                     <td>{{ audio.music.released_Year }}</td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="fas fa-info-circle"></i></a></td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="far fa-edit"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+
+        {% else %}
+    <P>no data found</P>
+{% endif %}
+        </div>
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-3 offset-md-4" style="background-color: black; border-radius: 5px">
+        <h3 style="color: white; text-align: center">UPLOADED VIDEO</h3>
+    </div>
+</div>
+<div class="row" style="margin-top: 1%;box-shadow: 10px 10px 10px">
+
+            {% if  user_uploaded_video %}
+                <table  id="video" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Song Title</th>
+                    <th>Album</th>
+                    <th>Featured Artist</th>
+                    <th>Released Year</th>
+                    <th>Detail</th>
+                    <th>Edit</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for video in  user_uploaded_video   %}
+                    <tr>
+                    <td>{{ video.music.artist }}</td>
+                    <td>{{ video.music.song_title }}</td>
+                    <td>{{ video.music.album }}</td>
+                    <td>{{ video.music.featured_artist}}</td>
+                     <td>{{ video.music.released_Year }}</td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="fas fa-info-circle"></i></a></td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="far fa-edit"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+
+        {% else %}
+    <P>no data found</P>
+{% endif %}
+        </div>
+
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-3 offset-md-4" style="background-color: black; border-radius: 5px">
+        <h3 style="color: white; text-align: center">UPLOADED GIST</h3>
+    </div>
+</div>
+<div class="row" style="margin-top: 1%;box-shadow: 10px 10px 10px">
+
+            {% if user_uploaded_gist %}
+                <table  id="gist" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Created Date</th>
+                    <th>Detail</th>
+                    <th>Edit</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for gist in  user_uploaded_gist   %}
+                    <tr>
+                    <td>{{gist.title }}</td>
+                    <td>{{ gist.category }}</td>
+                    <td>{{ gist.created_on | date }}</td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="fas fa-info-circle"></i></a></td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="far fa-edit"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+
+        {% else %}
+    <P>no data found</P>
+{% endif %}
+        </div>
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-3 offset-md-4" style="background-color: black; border-radius: 5px">
+        <h3 style="color: white; text-align: center">UPLOADED TALK ZONE</h3>
+    </div>
+</div>
+ {% if user_uploaded_talk %}
+<div class="row" style="margin-top: 1%;box-shadow: 10px 10px 10px">
+
+
+                <table  id="talk" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Poster</th>
+                    <th>Created Date</th>
+                    <th>Detail</th>
+                    <th>Edit</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for talk in  user_uploaded_talk  %}
+                    <tr>
+                    <td>{{talk.title }}</td>
+                    <td>{{ talk.poster }}</td>
+                    <td>{{ talk.created_on | date }}</td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="fas fa-info-circle"></i></a></td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="far fa-edit"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+        </div>
+{% endif %}
+{% if user_uploaded_news %}
+<div class="row" style="margin-top: 2%;">
+    <div class="col-md-3 offset-md-4" style="background-color: black; border-radius: 5px">
+        <h3 style="color: white; text-align: center">UPLOADED NEWS</h3>
+    </div>
+</div>
+<div class="row" style="margin-top: 1%;box-shadow: 10px 10px 10px">
+
+
+                <table  id="news" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Created Date</th>
+                    <th>Detail</th>
+                    <th>Edit</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for news in  user_uploaded_news %}
+                    <tr>
+                    <td>{{news.title }}</td>
+                    <td>{{ news.category }}</td>
+                    <td>{{ news.created_on | date }}</td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="fas fa-info-circle"></i></a></td>
+                    <td><a href="" class="btn btn-dark btn-sm" role="button"><i class="far fa-edit"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+
+        {% else %}
+    <P>no data found</P>
+    </div>
+{% endif %}
+
+</div>
+
+
+   <!--<script src="https://code.jquery.com/jquery-3.3.1.js" integrity=""></script>
+     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>--->
+
+    <script src="{% static 'datatable/DataTables-1.10.18/js/jquery.dataTables.min.js' %}" integrity="" ></script>
+    <script src="{% static 'datatable/DataTables-1.10.18/js/dataTables.bootstrap.min.js' %}" integrity="" ></script>
+    <script src="{% static 'datatable/DataTables-1.10.18/js/dataTables.bootstrap4.min.js' %}" integrity="" ></script>
+    <script src="{% static 'datatable/Buttons-1.5.2/js/dataTables.buttons.min.js' %}" integrity=""  ></script>
+    <script src="{% static 'datatable/Buttons-1.5.2/js/buttons.flash.min.js' %}" integrity=""  ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" integrity=""  ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" integrity=""  ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" integrity=""  ></script>
+    <script src="{% static 'datatable/Buttons-1.5.2/js/buttons.html5.min.js' %}" integrity="" ></script>
+   <script src="{% static 'datatable/Buttons-1.5.2/js/buttons.print.min.js' %}" integrity="" ></script>
+
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+        ]
+
+    } );
+} );
+  </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+    $('#video').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+        ]
+
+    } );
+} );
+  </script>
+     <script type="text/javascript">
+      $(document).ready(function() {
+    $('#gist').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+        ]
+
+    } );
+} );
+  </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+    $('#news').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+        ]
+
+    } );
+} );
+  </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+    $('#talk').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+        ]
+
+    } );
+} );
+  </script>
+
+{% endblock %}

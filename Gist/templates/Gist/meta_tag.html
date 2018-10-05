@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block extra_head_tags %}
+<meta property="og:type"          content="website" />
+{% for gist in gist %}
+  <meta property="og:title"         content="{{ gist.title }}" />
+  <meta property="og:description"   content="{{ gist.description }}" />
+  <meta property="og:image"         content="{{ ref_url }}{{ gist.cover_image.url }}" />
+{% endfor %}
+{% endblock %}
+</head>
+<body>
+
+</body>
+</html>
