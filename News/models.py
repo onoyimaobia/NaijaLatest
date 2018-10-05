@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from  ckeditor.fields import RichTextField, CKEditorWidget
+from ckeditor_uploader.fields import RichTextUploadingField
 
 CATEGORY_CHOICES = (
     ('politics', 'POLITICS'),
@@ -38,9 +40,13 @@ class Post(models.Model):
 
 
 class NewsPosts(models.Model):
-    title = models.CharField(max_length=250)
-    description = models.CharField(max_length=200, blank=True)
-    body = models.TextField()
+    title = RichTextField(max_length=250, config_name='special')
+    description = RichTextField(max_length=200, blank=True, config_name='special')
+    body = RichTextUploadingField(config_name='default',
+                                  external_plugin_resources=[('youtube',
+                                                             '/static/ckeditor/youtube/',
+                                                              'plugin.js', )],
+                                  )
     category = models.CharField(max_length=15, choices=CATEGORY_CHOICES, default='politics')
     slug = models.SlugField(max_length=200, unique=True)
     cover_picture = models.ImageField(upload_to=user_directory_path)

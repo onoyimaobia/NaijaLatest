@@ -20,11 +20,17 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Music/', include('Music.urls')),
     path('Gist/', include('Gist.urls')),
     path('News/', include('News.urls')),
+    path('Profile/', include('Profile.urls')),
+    path('oauth', include('social_django.urls', namespace='social')),
+    path('TalkZone', include('TalkZone.urls')),
+    path('Mysteries', include('Mysteries.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

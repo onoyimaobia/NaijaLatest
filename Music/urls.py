@@ -20,6 +20,17 @@ urlpatterns = [
     path('video_hiphop_pop', views.video_hiphop_pop, name='video_hiphop_pop'),
     path('video_others', views.video_others, name='video_others'),
     path('song_download/<int:audio_id>/', views.song_download, name='song_download'),
-    path('video_download/<int:video_id>/', views.video_download, name='video_download')
+    path('video_download/<int:video_id>/', views.video_download, name='video_download'),
+    path('video_download/<int:video_id>/', views.video_download, name='video_download'),
+    path('add_music', views.add_music, name='add-music'),
+    path('add_audio/<music_id>', views.add_audio, name='add-audio'),
+    path('Add Video/<music_id>', views.add_video, name='add-video'),
+    path('add_mixtape', views.add_mixtape, name='add_mixtape'),
+    path('mixtape', views.mixtape, name='mixtape'),
+    path('music_mixtape/<slug>/', views.play_mixtape, name='music_mixtape'),
+    path('save_commment', views.save_comment, name='save_comment'),
+    path('commment', views.display_comment, name='display_comment')
+
+
 ]
 

@@ -9,5 +9,7 @@ urlpatterns = [
     path('celeb', views.celeb, name='celeb'),
     path('wedding', views.wedding, name='wedding'),
     path('all_gist', views.all_gist, name='all_gist'),
-    path('display_gist/<int:gist_id>/', views.display_gist, name='display_gist')
+    path('display_gist/<slug>/', views.display_gist, name='display_gist'),
+    path('<int:gist_id>/', views.saveviewd, name='save'),
+    path('add-gist', views.add_gist, name='add-gist')
     ]

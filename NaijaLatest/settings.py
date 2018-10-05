@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-
+from .email_info import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_USE_TLS = EMAIL_USE_TLS
+EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_PORT = EMAIL_PORT
+
 
 # Application definition
 
@@ -34,14 +40,59 @@ INSTALLED_APPS = [
     'Music.apps.MusicConfig',
     'News.apps.NewsConfig',
     'Gist.apps.GistConfig',
+    'Profile.apps.ProfileConfig',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django_extensions',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'social_django',
+    'TalkZone.apps.TalkzoneConfig',
+    'Mysteries.apps.MysteriesConfig',
+    'ckeditor',
+    'ckeditor_uploader',
+
 ]
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 300,
+        'toolbar': 'default',
+        'toolbar_default': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Strike',
+             'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor0'],
+            ['Smiley', 'specialChar'],
+            ['Youtube'],
+            ['Source'],
+        ],
+        'extraPlugins': 'youtube',
+
+
+    },
+    'special': {
+        'toolbar': 'special',
+        'height': 100,
+        'toolbar_special': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'SpellChecker'],
+            ['TextColor', 'BGColor'],
+            ['SpecialChar'],
+        ],
+    },
+    'specialtape':{
+        'toolbar': 'specialtape',
+        'toolbar_specialtape': [
+            ['Image'],
+        ],
+    }
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +102,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'NaijaLatest.urls'
@@ -58,7 +111,7 @@ ROOT_URLCONF = 'NaijaLatest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,11 +120,27 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+                'Music.context_processors.song',
+                'Profile.context_processors.profile',
             ],
         },
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    'django.contrib.auth.backends.ModelBackend',
+
+)
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 WSGI_APPLICATION = 'NaijaLatest.wsgi.application'
 
 
@@ -87,7 +156,7 @@ DATABASES = {
     }
 }
 
-
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -121,7 +190,19 @@ USE_L10N = True
 USE_TZ = True
 
 SHARE_URL = "http://127.0.0.1:9000/display_gist.html"
+SHARE_TALKZONE_URL = "http://127.0.0.1:9000/talk_zone_view.html"
+LOGIN_URL = 'profile/login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home1'
 
+SOCIAL_AUTH_FACEBOOK_KEY = '276569669840426'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '36ffa2d12d0a1ed1c507b9223f1b4c9d'  # App Secret
+
+SOCIAL_AUTH_GITHUB_KEY = '7d2c254958d044ac8997'
+SOCIAL_AUTH_GITHUB_SECRET = '016fd2728b0c76e05b10691d480e9cf6111ac210'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='742838240102-vc2av397nnkc7ope5sofba9eg43mgamm.apps.googleusercontent.com'  #Paste CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'Ild3hdNdPwVSrfPq_rqsmXrQ' #Paste Secret Key
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -135,3 +216,19 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
+CONTENT_TYPES = ['image', 'video']
+# 1.25MB = 1310720
+# 2.5MB - 2621440
+# 5MB - 5242880
+# 10MB - 10485760
+# 20MB - 20971520
+# 50MB - 5242880
+# 100MB 104857600
+# 250MB - 214958080
+# 500MB - 429916160
+MAX_UPLOAD_SIZE = "1310720"
+

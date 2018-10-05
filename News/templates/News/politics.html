@@ -13,11 +13,11 @@
     {% for news in  first_twelve_politics %}
                 <div class="col-md-4 " style="padding-left: 1px;padding-right: 1px">
 
-                        <a href="{% url 'News:display_news' news.id %}">
+                        <a href="{% url 'News:display_news' news.slug %}">
                             <img src="{{ news.cover_picture.url }}" class="img-fluid" style="height: 160px; width: 1000px;">
 
                         </a>
-                        <a href="{% url 'News:display_news' news.id %}">{{ news.title }}</a>
+                        <a href="{% url 'News:display_news' news.slug %}">{{ news.title }}</a>
 
                         <div class="row">
                             <div class="col-md-4">

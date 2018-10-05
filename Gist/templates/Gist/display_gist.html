@@ -1,6 +1,14 @@
 {% extends 'Music/base.html' %}
 <title> {% block title %}News View{% endblock %}</title>
+{% block extra_head_tags %}
+{% for gist in gist %}
+<meta property="og:url"           content="{{ ref_url }}/{{gist.title  }}" /><meta property="og:type"          content="website" />
 
+  <meta property="og:title"         content="{{ gist.title }}" />
+  <meta property="og:description"   content="{{ gist.description }}" />
+  <meta property="og:image"         content="{{ ref_url }}{{ gist.cover_image.url }}" />
+    {% endfor %}
+{% endblock %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
           integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
@@ -9,111 +17,55 @@
 
   <div class="container" style="background-color:white; margin-top: 0.5%">
   {% for gist in gist %}
-  <div class="row">
-      <div class="col-lg-12">
-          <h6 style="border:2px solid black;border-radius: 12px;width: 20%; text-align: center">{{ gist.category }}</h6>
-        <strong style="font-family: 'Arial Black'; font-size: x-large">{{ gist.title }}</strong>
-      </div>
-  </div>
-  <div class="row" style="margin-top: 1%">
-         <div class="col-lg-4">
-            <h6>By <strong>{{ gist.poster  |safe}}</strong></h6>
-         </div>
-          <div class="col-lg-4">
-            <h6>On {{news.created_on  }}</h6>
-         </div>
-          <div class="col-lg-4">
-            <div class="row">
-                <div class="col-lg-6">
-                   <h6><i class="fas fa-eye" style="color: #F0F0F0"></i> 5</h6>
-                </div>
-                <div class="col-lg-6">
-                    <h6><i class="fas fa-share-alt" style="color: #F0F0F0"></i> 8</h6>
-                </div>
+      <div class="row">
+            <div class="col-lg-4" >
+                <a href="#" class="btn btn-dark" role="button">{{ gist.category }}</a>
             </div>
-         </div>
+            <div class="col-lg-12">
+                <strong style="font-family:'Arial Black'; font-size:xx-large;color: #535362">{{ gist.title |safe }}</strong>
+            </div>
+        </div><br>
+       <div class="row">
+            <div class="col-lg-12">
+                <h6>Posted by <strong style="color: #535362">{{ gist.poster  |safe}}</strong> on {{ gist.created_on | date }}</h6>
+            </div>
+        </div>
+
+  <div class="row" style="margin-top: 1%">
+
   </div>
   {% endfor %}
-  <hr>
-  <div class=" row">
-        <div class="col-lg-1">
-            <h5 style="font-family: 'Arial Black'; font-size: x-large;"><i class="fas fa-share-alt"></i></h5>
-        </div>
-        <div class="clo-lg-2">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ ref_url }}">
-            <img src="{% static 'image/f.fw.png' %}" class="img-fluid" height="10"/>
-        </a>
-        </div>
-        <div class="clo-lg-2">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=http://CodingForEntrepreneurs.com/">
-            <img src="{% static 'image/what.fw.png' %}" class="img-fluid" height="10"/>
-        </a>
-        </div>
-        <div class="clo-lg-2">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=http://CodingForEntrepreneurs.com/">
-            <img src="{% static 'image/ints.fw.png' %}" class="img-fluid" height="10"/>
-        </a>
-        </div>
-        <div class="clo-lg-2">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=http://CodingForEntrepreneurs.com/">
-            <img src="{% static 'image/linkdn.fw.png' %}" class="img-fluid" height="10"/>
-        </a>
+  <div class="row">
+        <div class="col-lg-12">
+            <div class="too" style="float: right">
+                {% for gist in gist %}
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ ref_url }}" target="_blank">
+                    <i class="fab fa-facebook-square fa-2x" style="color: #3B5998"></i>
+                </a>
+                {% endfor %}
+                <a href="" ><i class="fab fa-google-plus-square fa-2x" style="color: #dc4e41"></i></a>
+                <a href=""  ><i class="fab fa-twitter-square fa-2x" style="color: #55acee"></i></a>
+                <a href="" ><i class="fab fa-linkedin fa-2x" style="color:  #0077B5"></i></a>
+                <a href=""><i class="fab fa-whatsapp-square fa-2x" style="color: #25d366"></i></a>
+            </div>
         </div>
     </div>
+  <hr>
+
  {% for gist in gist %}
   <div class="row">
       <div class="col-lg-12">
-          <h6 style="font-family: 'Times New Roman'; font-size: larger"><strong>Brief Description...</strong> {{ gist.description }}</h6>
+          <!--<h6 style="font-family: 'Times New Roman'; font-size: larger"><strong>Brief Description...</strong> {{ gist.description }}</h6>-->
           <img src="{{ gist.cover_image.url }}" class="center-block img-fluid"/>
       </div>
   </div>
   {% endfor %}
   <hr>
-  {% if more_gist_three %}
 
   <div class="row">
-      <div class="col-lg-12">
-          <h6>You May Like This........</h6>
-      </div>
-  </div>
-  <div class="col-lg-12">
-  <div class="row">
-          {% for gist in  more_gist_three %}
-                <div class="col-md-4 " style="padding-left: 1px;padding-right: 1px">
-
-                        <a href="#">
-                            <img src="{{ gist.cover_image.url }}" class="img-fluid" style="height: 160px; width: 1000px;">
-
-                        </a>
-                        <a href="#">{{ gist.title}}</a>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a href="#" style="margin-left: 5px;color: darkgray"> <i class="fas fa-share-alt" style="color: #F0F0F0"></i>&nbsp;7</a>
-                            </div>
-                            <div class="col-md-4">
-
-                            </div>
-                             <div class="col-md-4" style="color: darkgray">
-                                 <i class="fas fa-eye" style="color: #F0F0F0"></i>7
-                             </div>
-
-                        </div>
-
-
-
-                </div>
-                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
-            {% endfor %}
-
-  </div>
-  </div>
-  <hr>
-  {% endif %}
-  <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-12 col-sm-12">
           {% for gist in gist %}
-          <h6 style="font-family: 'Times New Roman';font-size: larger">{{ gist.body |safe|linebreaks }}</h6>
+          <h6 style="font-family: 'Times New Roman';font-size: larger">{{ gist.body |safe }}</h6>
           {% endfor %}
       </div>
   </div>
@@ -128,24 +80,11 @@
           {% for gist in more_gist %}
                 <div class="col-md-4 " style="padding-left: 1px;padding-right: 1px">
 
-                        <a href="#">
+                        <a href="{% url 'Gist:display_gist'  gist.slug %}">
                             <img src="{{ gist.cover_image.url }}" class="img-fluid" style="height: 160px; width: 1000px;">
 
                         </a>
-                        <a href="#">{{ gist.title}}</a>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a href="#" style="margin-left: 5px;color: darkgray"> <i class="fas fa-share-alt" style="color: #F0F0F0"></i>&nbsp;7</a>
-                            </div>
-                            <div class="col-md-4">
-
-                            </div>
-                             <div class="col-md-4" style="color: darkgray">
-                                 <i class="fas fa-eye" style="color: #F0F0F0"></i>7
-                             </div>
-
-                        </div>
+                        <a href="{% url 'Gist:display_gist' gist.slug %}" style="color: #535362">{{ gist.title}}</a>
 
 
 
@@ -156,6 +95,27 @@
   </div>
   </div>
   {% endif %}
+      <div class="row">
+       <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your share button code -->
+  <div class="fb-share-button"
+       data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="small"
+       data-mobile-iframe="true">
+      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+
+         class="fb-xfbml-parse-ignore">Share
+      </a>
+  </div>
+      </div>
+
   </div>
 
 

@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import NewsPosts
 from django.db.models import Q
 from django.http import Http404
-# Create your views here.
+from .forms import AddNews
+from django.contrib import messages
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
 
 def politics(request):
@@ -30,25 +32,64 @@ def entertainment(request):
 
 
 def all_news(request):
-    first_fifteen_news = NewsPosts.objects.all().order_by('-id')[:15]
-    rest_news = NewsPosts.objects.all().order_by('-id')[15:]
+    news = NewsPosts.objects.all().order_by('-id')
+    paginator = Paginator(news, 36)
+    page = request.GET.get('page', 1)
+    try:
+        newss = paginator.page(page)
+    except PageNotAnInteger:
+        newss = paginator.page(1)
+    except EmptyPage:
+        newss = paginator.page(paginator.num_pages)
     template = 'News/all_news.html'
-    context = {'first_fifteen_news': first_fifteen_news, 'rest_news': rest_news}
+    context = {'newss': newss}
     return render(request, template, context)
 
 
-def display_news(request, news_id):
+def display_news(request, slug):
     try:
-        news = NewsPosts.objects.filter(pk=news_id)
-        select_related_date = NewsPosts.objects.get(pk=int(news_id))
-        related_date = select_related_date.created_on.date()
+        print(slug)
+        news = NewsPosts.objects.filter(slug=slug)
+        select_related_date = NewsPosts.objects.get(slug=slug)
+        related_date = select_related_date.category
         print(related_date)
-        more_news_three = NewsPosts.objects.filter(~Q(pk=int(news_id)), created_on__date=related_date).order_by('-id')[:3]
-        more_news = NewsPosts.objects.filter(~Q(pk=int(news_id)), created_on__date=related_date).order_by('-id')[3:8]
+        #more_news_three = NewsPosts.objects.filter(~Q(slug=slug), created_on__date=related_date).order_by('-id')[:3]
+        more_news = NewsPosts.objects.filter(~Q(slug=slug), category=related_date).order_by('-id')[:6]
         template = 'News/display_news.html'
-        context = {'news': news, 'select_related_date': select_related_date, 'more_news': more_news,
-                   'more_news_three': more_news_three}
+        context = {'news': news, 'select_related_date': select_related_date, 'more_news': more_news}
     except NewsPosts.DoesNotExist:
         raise Http404("No such Post")
     return render(request, template, context)
+
+
+def add_news(request):
+    current_user = request.user
+    user_id = current_user.id
+    if request.method == 'POST':
+        form = AddNews(request.POST, request.FILES)
+        if form.is_valid():
+            news = form.save(commit=False)
+            title = request.POST.get('title')
+            qs = NewsPosts.objects.filter(title=title)
+            if qs.exists():
+                messages.error(request, 'Song Title already Exist')
+                form = AddNews()
+                return redirect('Music:add-music', {'form': form})
+            else:
+                news.user_id = user_id
+                element_to_replace = ['', '@', '&', '$', '#', "'", '"', '--', ]
+                for element in element_to_replace:
+                    if element in title:
+
+                        news.slug = title.replace(element, '-')
+                form.save()
+                messages.success(request, ' Music added successfully')
+            return redirect('Profile:user-dashboard')
+    else:
+        form = AddNews()
+        template = 'News/addnews.html'
+        return render(request, template, {
+            'form': form
+        })
+
 
